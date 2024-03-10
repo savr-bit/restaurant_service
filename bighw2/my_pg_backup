@@ -1,0 +1,311 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.11 (Homebrew)
+-- Dumped by pg_dump version 14.11 (Homebrew)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: food_order; Type: TABLE; Schema: public; Owner: savrkubanov
+--
+
+CREATE TABLE public.food_order (
+    id integer NOT NULL,
+    total_amount integer NOT NULL,
+    user_id integer NOT NULL,
+    status character varying(256) NOT NULL,
+    position_number integer NOT NULL
+);
+
+
+ALTER TABLE public.food_order OWNER TO savrkubanov;
+
+--
+-- Name: food_order_id_seq; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE public.food_order ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.food_order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: menu_item; Type: TABLE; Schema: public; Owner: savrkubanov
+--
+
+CREATE TABLE public.menu_item (
+    id integer NOT NULL,
+    price integer NOT NULL,
+    timetocook integer NOT NULL,
+    item_name character varying(255) NOT NULL,
+    quantity integer NOT NULL
+);
+
+
+ALTER TABLE public.menu_item OWNER TO savrkubanov;
+
+--
+-- Name: menu_item_id_seq; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE public.menu_item ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.menu_item_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: order_menu_item; Type: TABLE; Schema: public; Owner: savrkubanov
+--
+
+CREATE TABLE public.order_menu_item (
+    id integer NOT NULL,
+    menu_item_id integer,
+    order_id integer NOT NULL,
+    status character varying
+);
+
+
+ALTER TABLE public.order_menu_item OWNER TO savrkubanov;
+
+--
+-- Name: order_menu_item_id_seq; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE public.order_menu_item ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.order_menu_item_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: person; Type: TABLE; Schema: public; Owner: savrkubanov
+--
+
+CREATE TABLE public.person (
+    id integer NOT NULL,
+    login character varying(255),
+    name character varying(255),
+    passwordhash character varying(255),
+    usertype character varying(255)
+);
+
+
+ALTER TABLE public.person OWNER TO savrkubanov;
+
+--
+-- Name: person_id_seq; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+CREATE SEQUENCE public.person_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.person_id_seq OWNER TO savrkubanov;
+
+--
+-- Name: person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: savrkubanov
+--
+
+ALTER SEQUENCE public.person_id_seq OWNED BY public.person.id;
+
+
+--
+-- Name: person_id_seq1; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE public.person ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.person_id_seq1
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: person_seq; Type: SEQUENCE; Schema: public; Owner: savrkubanov
+--
+
+CREATE SEQUENCE public.person_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.person_seq OWNER TO savrkubanov;
+
+--
+-- Data for Name: food_order; Type: TABLE DATA; Schema: public; Owner: savrkubanov
+--
+
+COPY public.food_order (id, total_amount, user_id, status, position_number) FROM stdin;
+\.
+
+
+--
+-- Data for Name: menu_item; Type: TABLE DATA; Schema: public; Owner: savrkubanov
+--
+
+COPY public.menu_item (id, price, timetocook, item_name, quantity) FROM stdin;
+7	250	30	Суп Харчо	16
+6	360	20	Борщ	12
+4	180	10	Пицца	15
+\.
+
+
+--
+-- Data for Name: order_menu_item; Type: TABLE DATA; Schema: public; Owner: savrkubanov
+--
+
+COPY public.order_menu_item (id, menu_item_id, order_id, status) FROM stdin;
+\.
+
+
+--
+-- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: savrkubanov
+--
+
+COPY public.person (id, login, name, passwordhash, usertype) FROM stdin;
+4	root	root	4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2	admin
+\.
+
+
+--
+-- Name: food_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.food_order_id_seq', 37, true);
+
+
+--
+-- Name: menu_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.menu_item_id_seq', 7, true);
+
+
+--
+-- Name: order_menu_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.order_menu_item_id_seq', 82, true);
+
+
+--
+-- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.person_id_seq', 6, true);
+
+
+--
+-- Name: person_id_seq1; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.person_id_seq1', 6, true);
+
+
+--
+-- Name: person_seq; Type: SEQUENCE SET; Schema: public; Owner: savrkubanov
+--
+
+SELECT pg_catalog.setval('public.person_seq', 1, true);
+
+
+--
+-- Name: food_order food_order_pkey; Type: CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.food_order
+    ADD CONSTRAINT food_order_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: menu_item menu_item_pkey; Type: CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.menu_item
+    ADD CONSTRAINT menu_item_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_menu_item order_menu_item_pkey; Type: CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.order_menu_item
+    ADD CONSTRAINT order_menu_item_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: person person_pkey; Type: CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.person
+    ADD CONSTRAINT person_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_menu_item fknir5l0bpyuugcfvp11t08r893; Type: FK CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.order_menu_item
+    ADD CONSTRAINT fknir5l0bpyuugcfvp11t08r893 FOREIGN KEY (order_id) REFERENCES public.food_order(id);
+
+
+--
+-- Name: order_menu_item fkoudm2juuy5n0gojkem824fy2k; Type: FK CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.order_menu_item
+    ADD CONSTRAINT fkoudm2juuy5n0gojkem824fy2k FOREIGN KEY (menu_item_id) REFERENCES public.menu_item(id);
+
+
+--
+-- Name: food_order user_id; Type: FK CONSTRAINT; Schema: public; Owner: savrkubanov
+--
+
+ALTER TABLE ONLY public.food_order
+    ADD CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES public.person(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
